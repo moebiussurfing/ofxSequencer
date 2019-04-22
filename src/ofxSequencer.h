@@ -12,11 +12,16 @@ struct ofxSequencerRowBase
     template<class T> T getMin();
     template<class T> T getMax();
     
+    template<class T> T getValue();
+    
     template<class T> void setValue(int idx, T value);
+    template<class T> void get_Value(int idx);
     
     virtual void update(int column) { }
     virtual void update(float cursor) { }
     virtual void randomize() { }
+
+    virtual void getValores() { }
 
     // TODO:
 //    virtual void debug() { }
@@ -51,11 +56,17 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     string getName() {return parameter->getName();}
     T getMin() {return parameter->getMin();}
     T getMax() {return parameter->getMax();}
+    
+    T getValue() {return parameter->getValue();}
+    
     void setValue(int idx, T value) {values[idx] = value;}
+    void get_Value(int idx)  { cout << "- get_Value values[idx] : " << values[idx] << endl; };
     
     void update(int column);
     void update(float cursor);
     void randomize();
+    
+    void getValores();
     
     void mousePressed(int col, int x, int y);
     void mouseDragged(int col, int y);
@@ -108,6 +119,23 @@ void ofxSequencerRow<T>::randomize()
 {
     for (int i = 0; i < values.size(); i++) {
         values[i] = ofRandom(parameter->getMin(), parameter->getMax());
+    }
+}
+
+template<class T>
+void ofxSequencerRow<T>::getValores()
+{
+    for (int i = 0; i < values.size(); i++) {
+        
+        
+//        cout << "> getValores: "<< i << " " << parameter->get() << endl;
+        
+
+        cout <<  "get_Value(i) i: " << i << endl;
+        get_Value(i);
+        
+        
+//        values[i] = ofRandom(parameter->getMin(), parameter->getMax());
     }
 }
 
@@ -190,6 +218,8 @@ inline void ofxSequencerRow<bool>::mouseReleased(int col)
 template<class T> T ofxSequencerRowBase::getMin() { return dynamic_cast<ofxSequencerRow<T>&>(*this).getMin(); }
 template<class T> T ofxSequencerRowBase::getMax() { return dynamic_cast<ofxSequencerRow<T>&>(*this).getMax(); }
 
+template<class T> T ofxSequencerRowBase::getValue() { return dynamic_cast<ofxSequencerRow<T>&>(*this).getValor(); }
+
 //-
 
 class ofxSequencer
@@ -218,6 +248,8 @@ public:
     void reset();
     void randomize();
     
+    void getValores();
+    
     void update();
     void draw();
     
@@ -231,6 +263,12 @@ public:
         ((ofxSequencerRow<T>*) rows[r])->setValue(c, value);
         toRedraw = true;
     }
+    
+    template<class T>
+    void get_Value(int r, int c) {
+        cout << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << ((ofxSequencerRow<T>*) rows[r])->get_Value(c);
+    }
+    
     
     int getColumn() {return column;}
     vector<ofxSequencerRowBase*> & getRows() {return rows;}

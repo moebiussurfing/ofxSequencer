@@ -58,6 +58,16 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
+void ofxSequencer::getValores()
+{
+    for (int r=0; r<rows.size(); r++) {
+        rows[r]->getValores();
+        cout << "----------------------------" << endl;
+    }
+    toRedraw = true;
+}
+
+
 //// TODO:
 //void ofxSequencer::debug()
 //{
