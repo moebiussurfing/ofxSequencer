@@ -3,6 +3,9 @@
 #include "ofMain.h"
 #include "ofxSequencerBpm.h"
 
+//--
+
+// T ofxSequencerRowBase
 
 struct ofxSequencerRowBase
 {
@@ -29,8 +32,6 @@ struct ofxSequencerRowBase
     virtual void update(int column) { }
     virtual void update(float cursor) { }
     virtual void randomize() { }
-
-    virtual void store_Row_Values() { }
     
     virtual void mousePressed(int col, int x, int y) { }
     virtual void mouseDragged(int col, int y) { }
@@ -41,11 +42,17 @@ struct ofxSequencerRowBase
     int cols;
     
     //-
-
+    
+    virtual void store_Row_Values() { }
+    
     // TODO: shoud be here to be public..?
 //    vector<bool> GRID_row_Values;
-};
+    
+};//ofxSequencerRowBase
 
+//--
+
+// T ofxSequencerRow
 
 template<typename T>
 struct ofxSequencerRow : public ofxSequencerRowBase
@@ -96,7 +103,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     bool get_CellValue(int idx)
     {
         bool myVal = values[idx];
-//        cout << "get_CellValue[idx] : " << myVal << endl;
+        //cout << "get_CellValue[idx] : " << myVal << endl;
         return myVal;
     };
     
@@ -120,13 +127,14 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     
     //-
     
+    // TODO: shoud be on baserow to be public..?
     vector<bool> GRID_row_Values;
     
 ////    GRID_row_Values.resize(12);
 //    bool GRID_row_Values[12];
 ////    bool GRID_rows_cols[12][16];
     
-};
+};//ofxSequencerRow
 
 //--
 
@@ -146,7 +154,7 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
         
         //--
     }
-}
+}//ofxSequencerRow
 
 //-
 
@@ -195,11 +203,11 @@ void ofxSequencerRow<T>::store_Row_Values()
     {
         bool myVal;
         
-        myVal = get_CellValue(c);
-        //myVal = parameter->get();
+        myVal = get_CellValue(c);//myVal = parameter->get();
         
         cout <<  "store_Row_Values: c: " << c << " = " << myVal << endl;
         
+        // store in row
         GRID_row_Values[c] = myVal;
     }
 }
@@ -353,9 +361,6 @@ public:
     }
     
     template<class T>
-//    void get_Value(int r, int c) {
-//        cout << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << ((ofxSequencerRow<T>*) rows[r])->get_Value(c);
-//    }
     bool get_Value(int r, int c) {
         bool myValue = ((ofxSequencerRow<T>*) rows[r])->get_Value(c);
         
@@ -366,17 +371,19 @@ public:
     int getColumn() {return column;}
     vector<ofxSequencerRowBase*> & getRows() {return rows;}
     
+    //--
+    
     ofEvent<int> beatEvent;
     
-    //-
+    //--
 
+    // made public..
     float cursor;
     int column;
-//    void getGRID();
-
-//    vector <ofParameter<bool>> GRID_RowsByCols_values_row;//all cols of row
-    vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
     
+    vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
+
+    //--
     
 private:
     
@@ -395,8 +402,9 @@ private:
     
     //-
     
-//    float cursor;
-//    int column;
+    //    float cursor;
+    //    int column;
+    
     int beatsPerMinute;
     int bpmInterval;
     int bpmTime;
@@ -464,6 +472,7 @@ void ofxSequencer::getRow(ofParameter<T> * parameter)
     //--
 }
 
+//---
 
 template<class T>
 void ofxSequencer::GRID_store()

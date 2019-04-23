@@ -80,18 +80,26 @@ void ofxSequencer::get_AllValues()
     
     for (int r = 0; r < rows.size(); r++) {
         cout << "--- row " << r << endl;
-        // working cout
         
-        rows[r]->store_Row_Values();
+        // save every row columns values on his object..
+        rows[r]->store_Row_Values();//working
 
-//        for (int c = 0; c < cols; c++)
-//        {
-//            cout << "- getValores " << "r:" << r << " c:" << c << " get_Value:" <<
-//            (<ofxSequencerRow> rows[r])->get_Value(c);
-
+        //-
+        
+        for (int c = 0; c < cols; c++)
+        {
+            //cout << "r:" << r << " c:" << c << endl;
+            
+            bool myVal;
+            
+//            myVal = rows[r]->getValue_Cell(c);//not working
+//            myVal = get;
+            
+//            myVal = (<ofxSequencerRow> rows[r])->get_Value(c);//error
 //            (this->rows[r])->getValue<ofxSequencerRow>())
-
-//        }
+         
+             GRID_RowsByCols_values[r][c] = myVal;
+        }
 
         cout << "----------------------------" << endl;
     }
