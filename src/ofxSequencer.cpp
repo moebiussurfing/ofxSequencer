@@ -326,37 +326,37 @@ void ofxSequencer::redraw()
     fbo.end();
 }
 
-void ofxSequencer::getGRID()
-{
-//    rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
-//    draggingCell = true;
-    
-    for (int r=0; r<rows.size(); r++)
-    {
-//        ofLogVerbose() << "> ROW " << ofToString(r);
-//        
-        for (int c = 0; c < cols; c++)
-        {
-   
-            ofLogVerbose() << " > COL " << ofToString(c);
-            
-
-
-            
-//            auto *myRow = rows[r]->getMax<<#class T#>>();
-
-            
-            
-            
-//            ofLogVerbose() << " > getName[r]" << ofToString(rows[r]->getName());
-
+//void ofxSequencer::getGRID()
+//{
+////    rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
+////    draggingCell = true;
+//    
+//    for (int r=0; r<rows.size(); r++)
+//    {
+////        ofLogVerbose() << "> ROW " << ofToString(r);
+////        
+//        for (int c = 0; c < cols; c++)
+//        {
+//   
+//            ofLogVerbose() << " > COL " << ofToString(c);
 //            
-////            rows[r]->getValue(c);
-
-//            
-        }
 //
-   
-    }
-}
+//
+//            
+////            auto *myRow = rows[r]->getMax<<#class T#>>();
+//
+//            
+//            
+//            
+////            ofLogVerbose() << " > getName[r]" << ofToString(rows[r]->getName());
+//
+////            
+//////            rows[r]->getValue(c);
+//
+////            
+//        }
+////
+//   
+//    }
+//}
 
