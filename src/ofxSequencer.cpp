@@ -76,8 +76,10 @@ void ofxSequencer::randomize()
 void ofxSequencer::get_AllValues()
 {
 //    rows[r]->store_allGridValues();
+    cout << "-------------get_AllValues-----------" << endl;
     
-    for (int r=0; r<rows.size(); r++) {
+    for (int r = 0; r < rows.size(); r++) {
+        cout << "--- row " << r << endl;
         // working cout
         
         rows[r]->store_Row_Values();
