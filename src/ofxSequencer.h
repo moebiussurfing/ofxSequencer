@@ -1,5 +1,3 @@
-
-
 /// addon modified from the original from:
 /// https://github.com/genekogan/ofxSequencer
 
@@ -323,11 +321,15 @@ public:
     
     //--
     
+    // TODO: BUG: play starts from step 1 instead of from 0 like expected!
+    
     void start();
     
     void advance();
     
-    //TODO: added methods
+    // TODO: added transport methods
+    // TODO: loop, one trig, loop and back...
+    
     void stepBack();
     
     void stop();
@@ -339,7 +341,6 @@ public:
     void get_AllValues();
     
     void DEBUG_All_GRID();//show store GRID vector
-    void REFRESH_All_GRID();//show store GRID vector
     
     //--
     
@@ -405,8 +406,8 @@ private:
     
     //-
     
-    //    float cursor;//go to public breaks something..(?)
-    //    int column;
+    //float cursor;//go to public breaks something..(?)
+    //int column;
     
     int beatsPerMinute;
     int bpmInterval;

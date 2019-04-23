@@ -100,15 +100,6 @@ void ofxSequencer::GRID_Refresh()
 }
 
 //-------------------------------------------------------------------
-void ofxSequencer::REFRESH_All_GRID()
-{
-    cout << "-------------REFRESH_All_GRID-----------" << endl;
-    
-//    GRID_Refresh();
-
-    cout << "-------------------------------------------" << endl;
-}
-
 void ofxSequencer::DEBUG_All_GRID()
 {
     cout << "-------------DEBUG_All_GRID-----------" << endl;
@@ -151,13 +142,11 @@ void ofxSequencer::get_AllValues()
          
             GRID_RowsByCols_values[r][c] = myVal;
         }
-
         cout << "----------------------------" << endl;
     }
 }
 
 //-------------------------------------------------------------------
-
 void ofxSequencer::play(void)
 {
     advance();
@@ -183,6 +172,7 @@ void ofxSequencer::advance()
     ofNotifyEvent(beatEvent, column, this);
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::stepBack()
 {
     column = (column - 1) % cols;
@@ -235,9 +225,8 @@ void ofxSequencer::mousePressed(ofMouseEventArgs &evt)
         rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
         draggingCell = true;
         
-        cout << ">pressed: mCell x " << mCell.x << endl;
-        cout << ">pressed: mCell y " << mCell.y << endl;
-        
+        ofLogVerbose() << "< pressed: mCell x " << mCell.x;
+        ofLogVerbose() << "< pressed: mCell y " << mCell.y;
     }
 }
 
@@ -255,19 +244,18 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt)
 {
     if (draggingCell && draggingFrames==0) {
         rows[mCell.y]->mouseReleased(mCell.x);
+        
+        ofLogVerbose() << "< released: mCell x " << mCell.x;
+        ofLogVerbose() << "< released: mCell y " << mCell.y;
     }
     else {
         draggingFrames = 0;
     }
     draggingCell = false;
     toRedraw = true;
-    
-    cout << "<released: mCell x " << mCell.x << endl;
-    cout << "<released: mCell y " << mCell.y << endl;
 }
 
 //-------------------------------------------------------------------
-
 void ofxSequencer::setPosition(int x, int y, int width, int height)
 {
     this->x = x;
@@ -309,7 +297,7 @@ void ofxSequencer::draw()
     fbo.draw(0, 0, width, height);
     
     ofSetRectMode(OF_RECTMODE_CORNER);
-//    ofSetLineWidth(4);
+    //    ofSetLineWidth(4);
     ofSetLineWidth(2);
     ofNoFill();
 
@@ -323,11 +311,11 @@ void ofxSequencer::draw()
     }
     else
     {
-//        ofSetColor(255, 0, 0);
-//        // lines only
-//        ofNoFill();
-//        ofSetColor(ofColor::white);
-//        ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
+        //        ofSetColor(255, 0, 0);
+        //        // lines only
+        //        ofNoFill();
+        //        ofSetColor(ofColor::white);
+        //        ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
         
         // filled bar with alpha
         ofFill();
@@ -343,10 +331,10 @@ void ofxSequencer::draw()
     ofPopStyle();
     ofPopMatrix();
     
-//    //debug
-//    ofSetColor(ofColor::white);
-//    ofDrawBitmapString(ofToString(column), 800, 800);
-////    if (column == 4) column = 0;
+    //    //debug
+    //    ofSetColor(ofColor::white);
+    //    ofDrawBitmapString(ofToString(column), 800, 800);
+    ////    if (column == 4) column = 0;
 }
 
 //-------------------------------------------------------------------
