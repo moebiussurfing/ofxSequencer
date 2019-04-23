@@ -1,3 +1,8 @@
+
+
+/// addon modified from the original from:
+/// https://github.com/genekogan/ofxSequencer
+
 #pragma once
 
 #include "ofMain.h"
@@ -43,9 +48,9 @@ struct ofxSequencerRowBase
     
     vector<bool> GRID_row_Values;
     
-};//ofxSequencerRowBase
+}; //ofxSequencerRowBase
 
-//----
+//------------------
 
 // T ofxSequencerRow
 
@@ -116,9 +121,9 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     
     //-
     
-};//ofxSequencerRow
+}; //ofxSequencerRow
 
-//----
+//------------------
 
 // creator row with columns
 
@@ -137,9 +142,9 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
         
         //--
     }
-}//ofxSequencerRow
+} //ofxSequencerRow
 
-//--
+//------------------
 
 // update row parameter in current column
 
@@ -149,6 +154,8 @@ void ofxSequencerRow<T>::update(int column)
     *parameter = values[column];
 }
 
+//------------------
+
 // update row parameter by cursor
 template<class T>
 void ofxSequencerRow<T>::update(float cursor)
@@ -156,7 +163,7 @@ void ofxSequencerRow<T>::update(float cursor)
     *parameter = ofLerp(values[(int) floor(cursor)], values[(int) ceil(cursor) % values.size()], cursor - floor(cursor));
 }
 
-//--
+//------------------
 
 // randomize all columns (steps) in the row
 
@@ -175,7 +182,7 @@ void ofxSequencerRow<T>::randomize()
     }
 }
 
-//----
+//------------------
 
 // store all row columns values (steps) in bool vector GRID_row_Values
 
@@ -195,7 +202,7 @@ void ofxSequencerRow<T>::store_Row_Values()
     }
 }
 
-//----
+//------------------
 
 // mouse handlers
 
@@ -224,7 +231,7 @@ inline void ofxSequencerRow<int>::mouseDragged(int col, int y)
     values[col] = ofClamp(pValue - 0.01 * (y - pMouse.y) * (parameter->getMax() - parameter->getMin()), parameter->getMin(), parameter->getMax());
 }
 
-//----
+//------------------
 
 // drawing functions
 
@@ -246,7 +253,7 @@ inline void ofxSequencerRow<bool>::draw(int col, int cellWidth, int cellHeight)
     }
 }
 
-//-----
+//------------------
 
 // mouse handlers
 
@@ -261,7 +268,7 @@ void ofxSequencerRow<T>::mouseReleased(int col)
     }
 }
 
-//----
+//------------------
 
 template<>
 inline void ofxSequencerRow<bool>::mouseReleased(int col)
@@ -269,7 +276,7 @@ inline void ofxSequencerRow<bool>::mouseReleased(int col)
     values[col] = 1.0 - values[col];
 }
 
-//--
+//------------------
 
 // rowBase getters
 
@@ -288,7 +295,7 @@ template<class T> T ofxSequencerRowBase::getValue()
     return dynamic_cast<ofxSequencerRow<T>&>(*this).getValue();
 }
 
-//-
+//------------------
 
 // class methods
 
@@ -379,7 +386,7 @@ public:
     
     vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
     
-    //--
+    //------------------
     
 private:
     
@@ -421,7 +428,7 @@ private:
     bool toRedraw;
 };
 
-//----
+//------------------
 
 template<class T>
 void ofxSequencer::addRow(ofParameter<T> * parameter)
@@ -444,5 +451,5 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     //--
 }
 
-
+//------------------
 
