@@ -92,6 +92,9 @@ void ofxSequencer::get_AllValues()
             
             bool myVal;
             
+//            ((ofxSequencerRow<T>*) rows[r])->getValue_Cell(c);
+//            rows[r]->getValue_Cell<ofxSequencerRow>(c);
+            
 //            myVal = rows[r]->getValue_Cell(c);//not working
 //            myVal = get;
             

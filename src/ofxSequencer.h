@@ -327,8 +327,11 @@ public:
     
     template<class T>
     void getRow(ofParameter<T> * parameter);
+
+    //-
     
-    template<class T>
+//    template<class T>
+//    void GRID_store(ofParameter<T> * parameter);
     void GRID_store();
     
     //--
@@ -382,7 +385,8 @@ public:
     int column;
     
     vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
-
+    
+    
     //--
     
 private:
@@ -474,11 +478,11 @@ void ofxSequencer::getRow(ofParameter<T> * parameter)
 
 //---
 
-template<class T>
-void ofxSequencer::GRID_store()
+//template<class T>
+//void ofxSequencer::GRID_store(ofParameter<T> * parameter)
+void GRID_store()
 {
-    
-    get_AllValues();
+//    get_AllValues();
     
     
 //    ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
@@ -510,7 +514,6 @@ void ofxSequencer::GRID_store()
 //    }
 
     //--
-    
     
 }
 
