@@ -23,8 +23,10 @@ struct ofxSequencerRowBase
     
     template<class T> void setValue(int idx, T value);
     
+//    template<class T> bool getValue_Cell(int idx);// works
+    bool getValue_Cell(int idx);// works?
+    
 //    template<class T> void getValue_Cell(int idx);//it works
-    template<class T> bool getValue_Cell(int idx);// works
 //    template<class T> bool getValue_Cell(int idx);
 //    bool getValue_Cell(int idx);
 //    virtual bool getValue_Cell(int idx);
@@ -46,7 +48,7 @@ struct ofxSequencerRowBase
     virtual void store_Row_Values() { }
     
     // TODO: shoud be here to be public..?
-//    vector<bool> GRID_row_Values;
+    vector<bool> GRID_row_Values;
     
 };//ofxSequencerRowBase
 
@@ -102,7 +104,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     
     bool get_CellValue(int idx)
     {
-        bool myVal = values[idx];
+        bool myVal = (bool) values[idx];
         //cout << "get_CellValue[idx] : " << myVal << endl;
         return myVal;
     };
@@ -128,7 +130,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     //-
     
     // TODO: shoud be on baserow to be public..?
-    vector<bool> GRID_row_Values;
+//    vector<bool> GRID_row_Values;
     
 ////    GRID_row_Values.resize(12);
 //    bool GRID_row_Values[12];
@@ -348,6 +350,8 @@ public:
     void randomize();
     
     void get_AllValues();
+    
+    void DEBUG_All_GRID();//show store GRID vector
     
     void update();
     void draw();

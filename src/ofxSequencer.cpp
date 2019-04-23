@@ -73,6 +73,27 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
+//-------------------------------------------------------------------
+
+void ofxSequencer::DEBUG_All_GRID()
+{
+    cout << "-------------DEBUG_All_GRID-----------" << endl;
+    
+    bool myVal;
+    for (int r = 0; r < rows.size(); r++)
+    {
+        cout << "--- row " << r << endl;
+          
+        for (int c = 0; c < cols; c++)
+        {
+            myVal = GRID_RowsByCols_values[r][c];
+              
+            cout << "- col " << c << " " << myVal << endl;
+        }
+    }
+    cout << "-------------------------------------------" << endl;
+}
+
 void ofxSequencer::get_AllValues()
 {
 //    rows[r]->store_allGridValues();
@@ -83,7 +104,7 @@ void ofxSequencer::get_AllValues()
         
         // save every row columns values on his object..
         rows[r]->store_Row_Values();//working
-
+        
         //-
         
         for (int c = 0; c < cols; c++)
@@ -92,22 +113,29 @@ void ofxSequencer::get_AllValues()
             
             bool myVal;
             
+            myVal = rows[r]->GRID_row_Values[c];//test after move to base
+            
 //            ((ofxSequencerRow<T>*) rows[r])->getValue_Cell(c);
 //            rows[r]->getValue_Cell<ofxSequencerRow>(c);
             
 //            myVal = rows[r]->getValue_Cell(c);//not working
+//            myVal = rows[r]->get_CellValue(c);//not working
+            
 //            myVal = get;
             
 //            myVal = (<ofxSequencerRow> rows[r])->get_Value(c);//error
 //            (this->rows[r])->getValue<ofxSequencerRow>())
          
              GRID_RowsByCols_values[r][c] = myVal;
+            
         }
 
         cout << "----------------------------" << endl;
     }
 //    toRedraw = true;
 }
+
+//-------------------------------------------------------------------
 
 void ofxSequencer::play(void)
 {
@@ -155,6 +183,8 @@ void ofxSequencer::stepBack()
     
     ofNotifyEvent(beatEvent, column, this);
 }
+
+//-------------------------------------------------------------------
 
 void ofxSequencer::setMouseActive(bool active)
 {
