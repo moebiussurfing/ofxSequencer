@@ -73,8 +73,7 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
-//----
-
+//-------------
 void ofxSequencer::GRID_Refresh()
 {
     cout << "-------------GRID_Refresh-----------" << endl;
@@ -93,7 +92,7 @@ void ofxSequencer::GRID_Refresh()
             
             GRID_RowsByCols_values[c][r] = boolState;
             
-            cout << "GRID_RowsByCols_values r:" << r << " c:" << c << " = " << boolState << endl;
+            cout << "GRID_RowsByCols_values c:" << c << " = " << boolState << endl;
         }
     }
     
