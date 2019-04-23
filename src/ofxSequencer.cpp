@@ -80,7 +80,7 @@ void ofxSequencer::get_AllValues()
     for (int r=0; r<rows.size(); r++) {
         // working cout
         
-        rows[r]->getValores();
+        rows[r]->store_Row_Values();
 
 //        for (int c = 0; c < cols; c++)
 //        {

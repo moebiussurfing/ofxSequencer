@@ -25,7 +25,7 @@ struct ofxSequencerRowBase
     virtual void update(float cursor) { }
     virtual void randomize() { }
 
-    virtual void getValores() { }
+    virtual void store_Row_Values() { }
     
     virtual void mousePressed(int col, int x, int y) { }
     virtual void mouseDragged(int col, int y) { }
@@ -83,7 +83,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     void update(float cursor);
     
     void randomize();
-    void getValores();
+    void store_Row_Values();
     
     void mousePressed(int col, int x, int y);
     void mouseDragged(int col, int y);
@@ -156,7 +156,7 @@ void ofxSequencerRow<T>::randomize()
 
 // store all row columns values (steps) in bool vector GRID_row_Values
 template<class T>
-void ofxSequencerRow<T>::getValores()
+void ofxSequencerRow<T>::store_Row_Values()
 {
     for (int c = 0; c < values.size(); c++)
     {
@@ -165,7 +165,7 @@ void ofxSequencerRow<T>::getValores()
         myVal = get_CellValue(c);
         //myVal = parameter->get();
         
-        cout <<  "getValores: c: " << c << " = " << myVal << endl;
+        cout <<  "store_Row_Values: c: " << c << " = " << myVal << endl;
         
         GRID_row_Values[c] = myVal;
     }
