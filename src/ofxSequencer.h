@@ -19,7 +19,12 @@ struct ofxSequencerRowBase
     template<class T> T getValue();// my getter
     
     template<class T> void setValue(int idx, T value);
-    template<class T> void getValue_Cell(int idx);
+    
+//    template<class T> void getValue_Cell(int idx);//it works
+    template<class T> bool getValue_Cell(int idx);// works
+//    template<class T> bool getValue_Cell(int idx);
+//    bool getValue_Cell(int idx);
+//    virtual bool getValue_Cell(int idx);
     
     virtual void update(int column) { }
     virtual void update(float cursor) { }
@@ -37,6 +42,8 @@ struct ofxSequencerRowBase
     
     //-
 
+    // TODO: shoud be here to be public..?
+//    vector<bool> GRID_row_Values;
 };
 
 
@@ -70,7 +77,21 @@ struct ofxSequencerRow : public ofxSequencerRowBase
         values[idx] = value;
     }
     
-//    void get_CellValue(int idx)  { cout << "- get_Value values[idx] : " << values[idx] << endl; };
+//    template<class T> T getMax();
+//    template<class T> void getValue_Cell(int idx);
+//    bool getValue_Cell(int idx)
+//    T getValue_Cell(int idx)
+
+//    void getValue_Cell(int idx)//it works
+    bool getValue_Cell(int idx)// works
+    {
+        bool myVal = (bool) values[idx];
+        cout << "- getValue_Cell(idx) : " << myVal << endl;
+//        return parameter->getMax();
+        return myVal;//bool
+    }
+    
+    //-
     
     bool get_CellValue(int idx)
     {
@@ -151,6 +172,8 @@ void ofxSequencerRow<T>::randomize()
         
         // TODO: add to GRID_row_Values too
         GRID_row_Values[i] = (bool) values[i];
+        
+        //-
     }
 }
 
@@ -279,18 +302,24 @@ public:
     int getBpm() {return beatsPerMinute;}
     bool getSmooth() {return smooth;}
     
+    //--
+    
     template<class T>
     void addRow(ofParameter<T> * parameter);
     
-//    template<class T>
-//    void GRID_store();
+    template<class T>
+    void getRow(ofParameter<T> * parameter);
+    
+    template<class T>
+    void GRID_store();
+    
+    //--
     
     void start();
     
     void advance();
     
     //TODO: added methods
-    
     void stepBack();
     
     void stop();
@@ -388,7 +417,7 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     
     //--
     
-    // erase all bool cols for this row
+    // erase all bools cols for any rows?
     for (int c = 0 ; c < cols; c++)
     {
         vector <bool> myBools;
@@ -398,28 +427,62 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     }
     
     //--
-
 }
 
-//template<class T>
-//void ofxSequencer::GRID_store()
-//{
-////    ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
-////    rows.push_back(newRow);
-////    toRedraw = true;
+template<class T>
+void ofxSequencer::getRow(ofParameter<T> * parameter)
+{
+//    cout << "----------------------------" << endl;
 //
-//    //--
-//
-//    for (int r=0; r<rows.size(); r++)
+//    // erase all bool cols for this row
+//    for (int c = 0 ; c < cols; c++)
 //    {
-//        // erase all bool cols for this row
-//        for (int c = 0 ; c < cols; c++)
-//        {
-//            bool myState = rows[r]->getValue();
-//            GRID_RowsByCols_values[r][c] = myState;
-//        }
+//        vector <bool> myBools;
+//        myBools.resize(cols);
+//
+//        bool myBool;
+////        myBool = rows.GRID_row_Values[c];
+//
+//        myBool = cols;
+//
+////        myBools[c] = GRID_RowsByCols_values[c];
+////        myBools.push_back(myBool);//get cell
+//
+//        cout << "getRow: c:" << c << " = " << myBool << endl;
 //    }
-//    //--
     
-//}
+    //--
+}
+
+
+template<class T>
+void ofxSequencer::GRID_store()
+{
+//    ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
+//    rows.push_back(newRow);
+//    toRedraw = true;
+
+    //--
+
+    for (int r=0; r<rows.size(); r++)//all rows
+    {
+        for (int c = 0 ; c < cols; c++)//all columns (steps)
+        {
+            bool myState;
+            
+//            rows[r]->getValue_Cell(c);
+            
+//            myState = rows[r]->getValue_Cell(c);//get colum cell of r row
+            
+//            myState = rows[r]->get_CellValue(c);//get colum cell of r row
+            
+            //-
+            
+            // store in external vector of bool values
+            GRID_RowsByCols_values[r][c] = myState;
+        }
+    }
+    //--
+    
+}
 
