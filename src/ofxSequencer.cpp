@@ -73,24 +73,27 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
-void ofxSequencer::getValores()
+void ofxSequencer::get_AllValues()
 {
+//    rows[r]->store_allGridValues();
+    
     for (int r=0; r<rows.size(); r++) {
         // working cout
-        rows[r]->getValores();
         
+        rows[r]->getValores();
+
 //        for (int c = 0; c < cols; c++)
 //        {
 //            cout << "- getValores " << "r:" << r << " c:" << c << " get_Value:" <<
 //            (<ofxSequencerRow> rows[r])->get_Value(c);
-            
+
 //            (this->rows[r])->getValue<ofxSequencerRow>())
-        
+
 //        }
-        
+
         cout << "----------------------------" << endl;
     }
-    toRedraw = true;
+//    toRedraw = true;
 }
 
 void ofxSequencer::play(void)
