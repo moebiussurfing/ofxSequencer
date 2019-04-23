@@ -73,7 +73,43 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
+//----
+
+void ofxSequencer::GRID_Refresh()
+{
+    cout << "-------------GRID_Refresh-----------" << endl;
+    
+    //--
+    
+    for (int r = 0; r < rows.size(); r++)
+    {
+        cout << "--- row " << r << endl;
+        
+        // read and fill all bools cols for any rows?
+        for (int c = 0 ; c < cols; c++)
+        {
+            bool boolState;
+            boolState = rows[r]->GRID_row_Values[c];;
+            
+            GRID_RowsByCols_values[c][r] = boolState;
+            
+            cout << "GRID_RowsByCols_values r:" << r << " c:" << c << " = " << boolState << endl;
+        }
+    }
+    
+    //--
+}
+
 //-------------------------------------------------------------------
+
+void ofxSequencer::REFRESH_All_GRID()
+{
+    cout << "-------------REFRESH_All_GRID-----------" << endl;
+    
+//    GRID_Refresh();
+
+    cout << "-------------------------------------------" << endl;
+}
 
 void ofxSequencer::DEBUG_All_GRID()
 {

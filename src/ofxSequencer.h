@@ -330,8 +330,9 @@ public:
     template<class T>
     void getRow(ofParameter<T> * parameter);
 
-    template<class T>
-    void GRID_Refresh(ofParameter<T> * parameter);
+//    template<class T>
+    void GRID_Refresh();
+//    void GRID_Refresh(ofParameter<T> * parameter);
     
     //-
     
@@ -355,6 +356,7 @@ public:
     void get_AllValues();
     
     void DEBUG_All_GRID();//show store GRID vector
+    void REFRESH_All_GRID();//show store GRID vector
     
     void update();
     void draw();
@@ -458,29 +460,32 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     //--
 }
 
-template<class T>
-void ofxSequencer::GRID_Refresh(ofParameter<T> * parameter)
-{
-    cout << "-------------GRID_Refresh-----------" << endl;
-    
-    //--
-    
-    for (int r = 0; r < rows.size(); r++)
-    {
-        cout << "--- row " << r << endl;
-        
-        // read and fill all bools cols for any rows?
-        for (int c = 0 ; c < cols; c++)
-        {
-            bool boolState;
-            boolState = rows[r]->GRID_row_Values[c];;
-            
-            GRID_RowsByCols_values[c][r] = boolState;
-        }
-    }
-    
-    //--
-}
+//--
+
+////template<class T>
+////void ofxSequencer::GRID_Refresh(ofParameter<T> * parameter)
+//void ofxSequencer::GRID_Refresh()
+//{
+//    cout << "-------------GRID_Refresh-----------" << endl;
+//
+//    //--
+//
+//    for (int r = 0; r < rows.size(); r++)
+//    {
+//        cout << "--- row " << r << endl;
+//
+//        // read and fill all bools cols for any rows?
+//        for (int c = 0 ; c < cols; c++)
+//        {
+//            bool boolState;
+//            boolState = rows[r]->GRID_row_Values[c];;
+//
+//            GRID_RowsByCols_values[c][r] = boolState;
+//        }
+//    }
+//
+//    //--
+//}
 
 //--
 
