@@ -22,6 +22,21 @@ void ofxSequencer::setup(int cols, int beatsPerMinute, int beatsPerBar)
     setBpm(beatsPerMinute, beatsPerBar);
     setMouseActive(true);
     setPosition(0, 0, 24 * cols, 96);
+    
+    //--
+    
+//    // resize and erase bools grid. 12 rows and 16 cols
+//    for (int r = 0; r < 12; r++)
+//    {
+//        vector <bool> myBools;
+//        for (int c = 0 ; c < 16; c++)
+//        {
+//            myBools.push_back(false);
+//        }
+//        GRID_values.push_back(myBools);//create row
+//    }
+    
+    //--
 }
 
 void ofxSequencer::setBpm(int beatsPerMinute, int beatsPerBar)
@@ -61,21 +76,22 @@ void ofxSequencer::randomize()
 void ofxSequencer::getValores()
 {
     for (int r=0; r<rows.size(); r++) {
+        // working cout
         rows[r]->getValores();
+        
+//        for (int c = 0; c < cols; c++)
+//        {
+//            cout << "- getValores " << "r:" << r << " c:" << c << " get_Value:" <<
+//            (<ofxSequencerRow> rows[r])->get_Value(c);
+            
+//            (this->rows[r])->getValue<ofxSequencerRow>())
+        
+//        }
+        
         cout << "----------------------------" << endl;
     }
     toRedraw = true;
 }
-
-
-//// TODO:
-//void ofxSequencer::debug()
-//{
-//    for (int r=0; r<rows.size(); r++) {
-////        cout << "debug[r] " << rows[r]->debug() << " ";
-//
-//    }
-//}
 
 void ofxSequencer::play(void)
 {
@@ -318,45 +334,26 @@ void ofxSequencer::getGRID()
 //        
         for (int c = 0; c < cols; c++)
         {
-            
-////            rows[r]->draw(c, cellWidth, cellHeight);
-////            ofTranslate(cellWidth, 0);
-//            
+   
             ofLogVerbose() << " > COL " << ofToString(c);
             
-//            ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
-            
-//            cout << "mCell.x: " << mCell.x;
-//            cout << "mCell.x: " << mCell.y;
+
 
             
 //            auto *myRow = rows[r]->getMax<<#class T#>>();
-            
-            
-//            rows[r]->
-            
-//            rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
-//            draggingCell = true;
+
             
             
             
 //            ofLogVerbose() << " > getName[r]" << ofToString(rows[r]->getName());
-//            
-////            string str;
-////            str = ofToString( values [2] );
-////            str = ofToString( parameter );
+
 //            
 ////            rows[r]->getValue(c);
-//            
-////            ofLogVerbose() << " > str" << str;
+
 //            
         }
 //
-////        ofTranslate(-cols * cellWidth, cellHeight);
-//        //        ofSetColor(0, 200, 0);
-////        ofSetColor(ofColor::white);
-////        ofDrawBitmapString(rows[r]->getName(), -20 -0.5 * cellWidth + 2, -cellHeight + 8);
-//        
+   
     }
 }
 

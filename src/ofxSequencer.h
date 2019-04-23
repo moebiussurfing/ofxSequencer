@@ -15,16 +15,13 @@ struct ofxSequencerRowBase
     template<class T> T getValue();
     
     template<class T> void setValue(int idx, T value);
-    template<class T> void get_Value(int idx);
+    template<class T> void getValue_Cell(int idx);
     
     virtual void update(int column) { }
     virtual void update(float cursor) { }
     virtual void randomize() { }
 
     virtual void getValores() { }
-
-    // TODO:
-//    virtual void debug() { }
     
     virtual void mousePressed(int col, int x, int y) { }
     virtual void mouseDragged(int col, int y) { }
@@ -35,16 +32,7 @@ struct ofxSequencerRowBase
     int cols;
     
     //-
-    
-//    virtual void debug() { }
-//    template<class T> T getVal();
-//    // TODO:
-//    void getValue(int idx) {
-//
-//        string str;
-//        str = ofToString( values[idx] );
-//        ofLogVerbose() << " > str " << str;
-//    }
+
 };
 
 
@@ -79,17 +67,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     T pValue;
     ofPoint pMouse;
     
-//    //-
-//
-//    // TODO:
-//    void getValue(int idx) {
-//
-//        string str;
-//        str = ofToString( values[idx] );
-//        ofLogVerbose() << " > str " << str;
-//    }
-    
-//    T getVal() {return parameter->getMax();}
+
 };
 
 
@@ -128,27 +106,14 @@ void ofxSequencerRow<T>::getValores()
     for (int i = 0; i < values.size(); i++) {
         
         
-//        cout << "> getValores: "<< i << " " << parameter->get() << endl;
-        
+//cout << "> getValores: "<< i << " " << parameter->get() << endl;
 
         cout <<  "get_Value(i) i: " << i << endl;
         get_Value(i);
         
-        
-//        values[i] = ofRandom(parameter->getMin(), parameter->getMax());
+//values[i] = ofRandom(parameter->getMin(), parameter->getMax());
     }
 }
-
-////TODO:
-//template<class T>
-//void ofxSequencerRow<T>::debug()
-//{
-//    for (int i = 0; i < values.size(); i++) {
-////        values[i] = ofRandom(parameter->getMin(), parameter->getMax());
-//
-//        cout << "values[i] " << values[i] << endl;
-//    }
-//}
 
 //-
 
@@ -276,10 +241,14 @@ public:
     ofEvent<int> beatEvent;
     
     //-
+
     float cursor;
     int column;
     void getGRID();
-//    void debug();
+
+//    vector <ofParameter<bool>> GRID_values_row;//all cols of row
+    vector < vector <bool> > GRID_values;//all cols in all rows
+    
     
 private:
     
@@ -319,4 +288,18 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
     rows.push_back(newRow);
     toRedraw = true;
+    
+    //--
+    
+    // erase all bool cols for this row
+    for (int c = 0 ; c < cols; c++)
+    {
+        vector <bool> myBools;
+        bool defState = false;
+        myBools.push_back(defState);//define cell
+        GRID_values.push_back(myBools);//create row
+    }
+    
+    //--
+
 }
