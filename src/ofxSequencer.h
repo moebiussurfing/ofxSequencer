@@ -22,14 +22,8 @@ struct ofxSequencerRowBase
     template<class T> T getValue();// my getter
     
     template<class T> void setValue(int idx, T value);
-    
-//    template<class T> bool getValue_Cell(int idx);// works
+
     bool getValue_Cell(int idx);// works?
-    
-//    template<class T> void getValue_Cell(int idx);//it works
-//    template<class T> bool getValue_Cell(int idx);
-//    bool getValue_Cell(int idx);
-//    virtual bool getValue_Cell(int idx);
     
     virtual void update(int column) { }
     virtual void update(float cursor) { }
@@ -47,12 +41,11 @@ struct ofxSequencerRowBase
     
     virtual void store_Row_Values() { }
     
-    // TODO: shoud be here to be public..?
     vector<bool> GRID_row_Values;
     
 };//ofxSequencerRowBase
 
-//--
+//----
 
 // T ofxSequencerRow
 
@@ -85,18 +78,12 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     {
         values[idx] = value;
     }
-    
-//    template<class T> T getMax();
-//    template<class T> void getValue_Cell(int idx);
-//    bool getValue_Cell(int idx)
-//    T getValue_Cell(int idx)
 
-//    void getValue_Cell(int idx)//it works
     bool getValue_Cell(int idx)// works
     {
         bool myVal = (bool) values[idx];
         cout << "- getValue_Cell(idx) : " << myVal << endl;
-//        return parameter->getMax();
+        //return parameter->getMax();
         return myVal;//bool
     }
     
@@ -129,16 +116,9 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     
     //-
     
-    // TODO: shoud be on baserow to be public..?
-//    vector<bool> GRID_row_Values;
-    
-////    GRID_row_Values.resize(12);
-//    bool GRID_row_Values[12];
-////    bool GRID_rows_cols[12][16];
-    
 };//ofxSequencerRow
 
-//--
+//----
 
 // creator row with columns
 
@@ -146,7 +126,8 @@ template<class T>
 ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxSequencerRowBase(cols)
 {
     this->parameter = parameter;
-    for (int c=0; c<cols; c++) {
+    for (int c=0; c<cols; c++)
+    {
         values.push_back(parameter->get());
         
         //--
@@ -158,7 +139,7 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
     }
 }//ofxSequencerRow
 
-//-
+//--
 
 // update row parameter in current column
 
@@ -175,7 +156,7 @@ void ofxSequencerRow<T>::update(float cursor)
     *parameter = ofLerp(values[(int) floor(cursor)], values[(int) ceil(cursor) % values.size()], cursor - floor(cursor));
 }
 
-//-
+//--
 
 // randomize all columns (steps) in the row
 
@@ -194,7 +175,7 @@ void ofxSequencerRow<T>::randomize()
     }
 }
 
-//-
+//----
 
 // store all row columns values (steps) in bool vector GRID_row_Values
 
@@ -204,8 +185,8 @@ void ofxSequencerRow<T>::store_Row_Values()
     for (int c = 0; c < values.size(); c++)
     {
         bool myVal;
-        
-        myVal = get_CellValue(c);//myVal = parameter->get();
+        // TODO: cell is float..
+        myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
         cout <<  "store_Row_Values: c: " << c << " = " << myVal << endl;
         
@@ -214,7 +195,7 @@ void ofxSequencerRow<T>::store_Row_Values()
     }
 }
 
-//---
+//----
 
 // mouse handlers
 
@@ -243,7 +224,7 @@ inline void ofxSequencerRow<int>::mouseDragged(int col, int y)
     values[col] = ofClamp(pValue - 0.01 * (y - pMouse.y) * (parameter->getMax() - parameter->getMin()), parameter->getMin(), parameter->getMax());
 }
 
-//---
+//----
 
 // drawing functions
 
@@ -265,7 +246,7 @@ inline void ofxSequencerRow<bool>::draw(int col, int cellWidth, int cellHeight)
     }
 }
 
-//-
+//-----
 
 // mouse handlers
 
@@ -279,6 +260,8 @@ void ofxSequencerRow<T>::mouseReleased(int col)
         values[col] = parameter->getMax();
     }
 }
+
+//----
 
 template<>
 inline void ofxSequencerRow<bool>::mouseReleased(int col)
@@ -326,19 +309,10 @@ public:
     
     template<class T>
     void addRow(ofParameter<T> * parameter);
-    
-    template<class T>
-    void getRow(ofParameter<T> * parameter);
 
-//    template<class T>
+    //--
+
     void GRID_Refresh();
-//    void GRID_Refresh(ofParameter<T> * parameter);
-    
-    //-
-    
-//    template<class T>
-//    void GRID_store(ofParameter<T> * parameter);
-    void GRID_store();
     
     //--
     
@@ -353,10 +327,14 @@ public:
     void reset();
     void randomize();
     
+    //--
+    
     void get_AllValues();
     
     void DEBUG_All_GRID();//show store GRID vector
     void REFRESH_All_GRID();//show store GRID vector
+    
+    //--
     
     void update();
     void draw();
@@ -366,11 +344,15 @@ public:
     void toggleVisible();
     void setMouseActive(bool active);
     
+    //--
+    
     template<class T>
     void setValue(int r, int c, T value) {
         ((ofxSequencerRow<T>*) rows[r])->setValue(c, value);
         toRedraw = true;
     }
+    
+    //--
     
     template<class T>
     bool get_Value(int r, int c) {
@@ -392,9 +374,10 @@ public:
     // made public..
     float cursor;
     int column;
+
+    //--
     
     vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
-    
     
     //--
     
@@ -415,7 +398,7 @@ private:
     
     //-
     
-    //    float cursor;
+    //    float cursor;//go to public breaks something..(?)
     //    int column;
     
     int beatsPerMinute;
@@ -438,6 +421,7 @@ private:
     bool toRedraw;
 };
 
+//----
 
 template<class T>
 void ofxSequencer::addRow(ofParameter<T> * parameter)
@@ -460,101 +444,5 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     //--
 }
 
-//--
 
-////template<class T>
-////void ofxSequencer::GRID_Refresh(ofParameter<T> * parameter)
-//void ofxSequencer::GRID_Refresh()
-//{
-//    cout << "-------------GRID_Refresh-----------" << endl;
-//
-//    //--
-//
-//    for (int r = 0; r < rows.size(); r++)
-//    {
-//        cout << "--- row " << r << endl;
-//
-//        // read and fill all bools cols for any rows?
-//        for (int c = 0 ; c < cols; c++)
-//        {
-//            bool boolState;
-//            boolState = rows[r]->GRID_row_Values[c];;
-//
-//            GRID_RowsByCols_values[c][r] = boolState;
-//        }
-//    }
-//
-//    //--
-//}
-
-//--
-
-template<class T>
-void ofxSequencer::getRow(ofParameter<T> * parameter)
-{
-//    cout << "----------------------------" << endl;
-//
-//    // erase all bool cols for this row
-//    for (int c = 0 ; c < cols; c++)
-//    {
-//        vector <bool> myBools;
-//        myBools.resize(cols);
-//
-//        bool myBool;
-////        myBool = rows.GRID_row_Values[c];
-//
-//        myBool = cols;
-//
-////        myBools[c] = GRID_RowsByCols_values[c];
-////        myBools.push_back(myBool);//get cell
-//
-//        cout << "getRow: c:" << c << " = " << myBool << endl;
-//    }
-    
-    //--
-}
-
-//---
-
-//template<class T>
-//void ofxSequencer::GRID_store(ofParameter<T> * parameter)
-void GRID_store()
-{
-    
-//    GRID_RowsByCols_values.push_back(true);
-    
-//    get_AllValues();
-    
-    
-//    ofxSequencerRow<T> *newRow = new ofxSequencerRow<T>(parameter, cols);
-//    rows.push_back(newRow);
-//    toRedraw = true;
-
-    //--
-
-//    for (int r=0; r<rows.size(); r++)//all rows
-//    {
-//        for (int c = 0 ; c < cols; c++)//all columns (steps)
-//        {
-//            bool myState;
-//
-////            myState = rows[r]->getValue_Cell(c);//not works
-//            myState = getValue_Cell(c);
-//
-////            get_AllValues();
-//
-////            myState = rows[r]->getValue_Cell(c);//get colum cell of r row
-//
-////            myState = rows[r]->get_CellValue(c);//get colum cell of r row
-//
-//            //-
-//
-//            // store in external vector of bool values
-//            GRID_RowsByCols_values[r][c] = myState;
-//        }
-//    }
-
-    //--
-    
-}
 

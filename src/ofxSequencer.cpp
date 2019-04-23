@@ -1,6 +1,5 @@
 #include "ofxSequencer.h"
 
-
 ofxSequencerRowBase::ofxSequencerRowBase(int cols)
 {
     this->cols = cols;
@@ -16,6 +15,7 @@ ofxSequencer::~ofxSequencer()
     stop();
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::setup(int cols, int beatsPerMinute, int beatsPerBar)
 {
     this->cols = cols;
@@ -73,7 +73,7 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
-//-------------
+//-------------------------------------------------------------------
 void ofxSequencer::GRID_Refresh()
 {
     cout << "-------------GRID_Refresh-----------" << endl;
@@ -100,7 +100,6 @@ void ofxSequencer::GRID_Refresh()
 }
 
 //-------------------------------------------------------------------
-
 void ofxSequencer::REFRESH_All_GRID()
 {
     cout << "-------------REFRESH_All_GRID-----------" << endl;
@@ -129,9 +128,9 @@ void ofxSequencer::DEBUG_All_GRID()
     cout << "-------------------------------------------" << endl;
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::get_AllValues()
 {
-//    rows[r]->store_allGridValues();
     cout << "-------------get_AllValues-----------" << endl;
     
     for (int r = 0; r < rows.size(); r++) {
@@ -149,25 +148,12 @@ void ofxSequencer::get_AllValues()
             bool myVal;
             
             myVal = rows[r]->GRID_row_Values[c];//test after move to base
-            
-//            ((ofxSequencerRow<T>*) rows[r])->getValue_Cell(c);
-//            rows[r]->getValue_Cell<ofxSequencerRow>(c);
-            
-//            myVal = rows[r]->getValue_Cell(c);//not working
-//            myVal = rows[r]->get_CellValue(c);//not working
-            
-//            myVal = get;
-            
-//            myVal = (<ofxSequencerRow> rows[r])->get_Value(c);//error
-//            (this->rows[r])->getValue<ofxSequencerRow>())
          
-             GRID_RowsByCols_values[r][c] = myVal;
-            
+            GRID_RowsByCols_values[r][c] = myVal;
         }
 
         cout << "----------------------------" << endl;
     }
-//    toRedraw = true;
 }
 
 //-------------------------------------------------------------------
@@ -220,6 +206,8 @@ void ofxSequencer::stepBack()
 }
 
 //-------------------------------------------------------------------
+
+// MOUSE HANDLERS:
 
 void ofxSequencer::setMouseActive(bool active)
 {
@@ -278,6 +266,8 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt)
     cout << "<released: mCell y " << mCell.y << endl;
 }
 
+//-------------------------------------------------------------------
+
 void ofxSequencer::setPosition(int x, int y, int width, int height)
 {
     this->x = x;
@@ -291,6 +281,7 @@ void ofxSequencer::setPosition(int x, int y, int width, int height)
     toRedraw = true;
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::update()
 {
     if (smooth && bpm.isPlaying())
@@ -302,6 +293,7 @@ void ofxSequencer::update()
     }
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::draw()
 {
     if (toRedraw) {
@@ -357,6 +349,7 @@ void ofxSequencer::draw()
 ////    if (column == 4) column = 0;
 }
 
+//-------------------------------------------------------------------
 void ofxSequencer::redraw()
 {
     cellWidth  = (float) width  / cols;
@@ -404,37 +397,4 @@ void ofxSequencer::redraw()
     fbo.end();
 }
 
-//void ofxSequencer::getGRID()
-//{
-////    rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
-////    draggingCell = true;
-//    
-//    for (int r=0; r<rows.size(); r++)
-//    {
-////        ofLogVerbose() << "> ROW " << ofToString(r);
-////        
-//        for (int c = 0; c < cols; c++)
-//        {
-//   
-//            ofLogVerbose() << " > COL " << ofToString(c);
-//            
-//
-//
-//            
-////            auto *myRow = rows[r]->getMax<<#class T#>>();
-//
-//            
-//            
-//            
-////            ofLogVerbose() << " > getName[r]" << ofToString(rows[r]->getName());
-//
-////            
-//////            rows[r]->getValue(c);
-//
-////            
-//        }
-////
-//   
-//    }
-//}
 
