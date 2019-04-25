@@ -78,13 +78,13 @@ void ofxSequencer::randomize()
 //-------------------------------------------------------------------
 void ofxSequencer::GRID_Refresh()
 {
-    cout << "-------------GRID_Refresh-----------" << endl;
+    ofLogNotice() << "-------------GRID_Refresh-----------";
     
     //--
     
     for (int r = 0; r < rows.size(); r++)
     {
-        cout << "--- row " << r << endl;
+        ofLogVerbose() << "--- row " << r;
         
         // read and fill all bools cols for any rows?
         for (int c = 0 ; c < cols; c++)
@@ -94,7 +94,7 @@ void ofxSequencer::GRID_Refresh()
             
             GRID_RowsByCols_values[c][r] = boolState;
             
-            cout << "GRID_RowsByCols_values c:" << c << " = " << boolState << endl;
+            ofLogVerbose() << "GRID_RowsByCols_values c:" << c << " = " << boolState << endl;
         }
     }
     
@@ -104,30 +104,30 @@ void ofxSequencer::GRID_Refresh()
 //-------------------------------------------------------------------
 void ofxSequencer::DEBUG_All_GRID()
 {
-    cout << "-------------DEBUG_All_GRID-----------" << endl;
+    ofLogNotice() << "-------------DEBUG_All_GRID-----------";
     
     bool myVal;
     for (int r = 0; r < rows.size(); r++)
     {
-        cout << "--- row " << r << endl;
+        ofLogVerbose() << "--- row " << r;
           
         for (int c = 0; c < cols; c++)
         {
             myVal = GRID_RowsByCols_values[r][c];
               
-            cout << "- col " << c << " " << myVal << endl;
+            ofLogVerbose() << "- col " << c << " " << myVal;
         }
     }
-    cout << "-------------------------------------------" << endl;
+    ofLogVerbose() << "-------------------------------------------" ;
 }
 
 //-------------------------------------------------------------------
 void ofxSequencer::get_AllValues()
 {
-    cout << "-------------get_AllValues-----------" << endl;
+    ofLogNotice() << "-------------get_AllValues-----------";
     
     for (int r = 0; r < rows.size(); r++) {
-        cout << "--- row " << r << endl;
+        ofLogVerbose() << "--- row " << r;
         
         // save every row columns values on his object..
         rows[r]->store_Row_Values();//working
@@ -136,7 +136,7 @@ void ofxSequencer::get_AllValues()
         
         for (int c = 0; c < cols; c++)
         {
-            //cout << "r:" << r << " c:" << c << endl;
+            //ofLogVerbose() << "r:" << r << " c:" << c;
             
             bool myVal;
             
@@ -144,7 +144,7 @@ void ofxSequencer::get_AllValues()
          
             GRID_RowsByCols_values[r][c] = myVal;
         }
-        cout << "----------------------------" << endl;
+        ofLogVerbose() << "----------------------------";
     }
 }
 
