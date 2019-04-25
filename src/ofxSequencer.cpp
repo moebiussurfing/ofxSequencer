@@ -18,6 +18,8 @@ ofxSequencer::~ofxSequencer()
 //-------------------------------------------------------------------
 void ofxSequencer::setup(int cols, int beatsPerMinute, int beatsPerBar)
 {
+    ofSetLogLevel(OF_LOG_NOTICE);
+    
     this->cols = cols;
     setBpm(beatsPerMinute, beatsPerBar);
     setMouseActive(true);
