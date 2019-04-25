@@ -85,7 +85,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     bool getValue_Cell(int idx)// works
     {
         bool myVal = (bool) values[idx];
-        ofLogNotice() << "- getValue_Cell(idx) : " << myVal;
+        ofLogVerbose() << "- getValue_Cell(idx) : " << myVal;
         //return parameter->getMax();
         return myVal;//bool
     }
@@ -95,7 +95,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     bool get_CellValue(int idx)
     {
         bool myVal = (bool) values[idx];
-        //ofLogNotice() << "get_CellValue[idx] : " << myVal;
+        //ofLogVerbose() << "get_CellValue[idx] : " << myVal;
         return myVal;
     };
     
@@ -193,7 +193,7 @@ void ofxSequencerRow<T>::store_Row_Values()
         // TODO: cell is float..
         myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
-        ofLogNotice() <<  "store_Row_Values: c: " << c << " = " << myVal;
+        ofLogVerbose() <<  "store_Row_Values: c: " << c << " = " << myVal;
         
         // store in row
         GRID_row_Values[c] = myVal;
@@ -366,7 +366,7 @@ public:
     bool get_Value(int r, int c) {
         bool myValue = ((ofxSequencerRow<T>*) rows[r])->get_Value(c);
         
-        ofLogNotice() << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << myValue;
+        ofLogVerbose() << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << myValue;
         return myValue;
     }
     
