@@ -299,7 +299,7 @@ void ofxSequencer::draw()
     fbo.draw(0, 0, width, height);
     
     ofSetRectMode(OF_RECTMODE_CORNER);
-    //    ofSetLineWidth(4);
+    //ofSetLineWidth(4);
     ofSetLineWidth(2);
     ofNoFill();
 
