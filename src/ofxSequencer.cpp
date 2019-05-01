@@ -177,7 +177,7 @@ void ofxSequencer::advance()
 //-------------------------------------------------------------------
 void ofxSequencer::stepBack()
 {
-    column = (column - 1) % cols;
+    column = (column - 1);// % cols;
     if (column < 0) column = 0;
     
     if (smooth) {

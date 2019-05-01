@@ -1,5 +1,10 @@
+
+///-------------------------------------------------------------
 /// addon modified from the original from:
 /// https://github.com/genekogan/ofxSequencer
+///
+/// TODO: BUG: starting skips step 0... A standby state or step 0 (col -1) should be defined, to jumo there when sequencer is stoped. Then, when staring, should jump to step 1 (col = 0)
+///-------------------------------------------------------------
 
 #pragma once
 
@@ -155,6 +160,7 @@ void ofxSequencerRow<T>::update(int column)
 //------------------
 
 // update row parameter by cursor
+
 template<class T>
 void ofxSequencerRow<T>::update(float cursor)
 {
@@ -384,7 +390,9 @@ public:
     int column;
 
     //--
-    
+
+    // GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
+
     vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
     
     //------------------
@@ -406,7 +414,7 @@ private:
     
     //-
     
-    //float cursor;//go to public breaks something..(?)
+    //float cursor;//go to public
     //int column;
     
     int beatsPerMinute;
@@ -440,7 +448,7 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     
     //--
     
-    // erase all bools cols for any rows?
+    // erase all bools cols for any rows (?)
     for (int c = 0 ; c < cols; c++)
     {
         vector <bool> myBools;
