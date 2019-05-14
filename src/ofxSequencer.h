@@ -3,7 +3,8 @@
 /// addon modified from the original from:
 /// https://github.com/genekogan/ofxSequencer
 ///
-/// TODO: BUG: starting skips step 0... A standby state or step 0 (col -1) should be defined, to jumo there when sequencer is stoped. Then, when staring, should jump to step 1 (col = 0)
+/// TODO: BUG: starting skips step 0... A standby state or step 0 (col -1) should be defined, to jump there when sequencer is stoped. Then, when staring, should jump to step 1 (col = 0)
+/// shoul be added a new standby -1 step to columns..
 ///-------------------------------------------------------------
 
 #pragma once
@@ -390,6 +391,8 @@ public:
     int column;
 
     //--
+
+    // SEQUENCER DATA
 
     // GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
 
