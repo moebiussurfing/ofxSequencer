@@ -78,23 +78,25 @@ void ofxSequencer::randomize()
 //-------------------------------------------------------------------
 void ofxSequencer::GRID_Refresh()
 {
+    // get grid matrix values from internal parameters to grid vector
+
     ofLogNotice() << "-------------GRID_Refresh-----------";
     
     //--
     
     for (int r = 0; r < rows.size(); r++)
     {
-        ofLogVerbose() << "--- row " << r;
+        ofLogVerbose("ofxSequencer") << "--- row " << r;
         
         // read and fill all bools cols for any rows?
         for (int c = 0 ; c < cols; c++)
         {
             bool boolState;
-            boolState = rows[r]->GRID_row_Values[c];;
+            boolState = rows[r]->grid_Rows[c];
             
-            GRID_RowsByCols_values[c][r] = boolState;
+            grid[c][r] = boolState;
             
-            ofLogVerbose() << "GRID_RowsByCols_values c:" << c << " = " << boolState << endl;
+            ofLogVerbose("ofxSequencer") << "grid c:" << c << " = " << boolState;
         }
     }
     
@@ -104,30 +106,34 @@ void ofxSequencer::GRID_Refresh()
 //-------------------------------------------------------------------
 void ofxSequencer::DEBUG_All_GRID()
 {
+    // dump grid matrix values
+
     ofLogNotice() << "-------------DEBUG_All_GRID-----------";
     
     bool myVal;
     for (int r = 0; r < rows.size(); r++)
     {
-        ofLogVerbose() << "--- row " << r;
+        ofLogVerbose("ofxSequencer") << "--- row " << r;
           
         for (int c = 0; c < cols; c++)
         {
-            myVal = GRID_RowsByCols_values[r][c];
+            myVal = grid[r][c];
               
-            ofLogVerbose() << "- col " << c << " " << myVal;
+            ofLogVerbose("ofxSequencer") << "- col " << c << " " << myVal;
         }
     }
-    ofLogVerbose() << "-------------------------------------------" ;
+    ofLogVerbose("ofxSequencer") << "-------------------------------------------" ;
 }
 
 //-------------------------------------------------------------------
 void ofxSequencer::get_AllValues()
 {
+    // get values from internal parameters to grid matrix
+
     ofLogNotice() << "-------------get_AllValues-----------";
     
     for (int r = 0; r < rows.size(); r++) {
-        ofLogVerbose() << "--- row " << r;
+        ofLogVerbose("ofxSequencer") << "--- row " << r;
         
         // save every row columns values on his object..
         rows[r]->store_Row_Values();//working
@@ -136,15 +142,15 @@ void ofxSequencer::get_AllValues()
         
         for (int c = 0; c < cols; c++)
         {
-            //ofLogVerbose() << "r:" << r << " c:" << c;
+            //ofLogVerbose("ofxSequencer") << "r:" << r << " c:" << c;
             
             bool myVal;
             
-            myVal = rows[r]->GRID_row_Values[c];//test after move to base
+            myVal = rows[r]->grid_Rows[c];//test after move to base
          
-            GRID_RowsByCols_values[r][c] = myVal;
+            grid[r][c] = myVal;
         }
-        ofLogVerbose() << "----------------------------";
+        ofLogVerbose("ofxSequencer") << "----------------------------";
     }
 }
 
@@ -227,8 +233,8 @@ void ofxSequencer::mousePressed(ofMouseEventArgs &evt)
         rows[mCell.y]->mousePressed(mCell.x, evt.x, evt.y);
         draggingCell = true;
         
-        ofLogVerbose() << "< pressed: mCell x " << mCell.x;
-        ofLogVerbose() << "< pressed: mCell y " << mCell.y;
+        ofLogVerbose("ofxSequencer") << "< pressed: mCell x " << mCell.x;
+        ofLogVerbose("ofxSequencer") << "< pressed: mCell y " << mCell.y;
     }
 }
 
@@ -247,8 +253,8 @@ void ofxSequencer::mouseReleased(ofMouseEventArgs &evt)
     if (draggingCell && draggingFrames==0) {
         rows[mCell.y]->mouseReleased(mCell.x);
         
-        ofLogVerbose() << "< released: mCell x " << mCell.x;
-        ofLogVerbose() << "< released: mCell y " << mCell.y;
+        ofLogVerbose("ofxSequencer") << "< released: mCell x " << mCell.x;
+        ofLogVerbose("ofxSequencer") << "< released: mCell y " << mCell.y;
     }
     else {
         draggingFrames = 0;

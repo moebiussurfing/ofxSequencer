@@ -50,7 +50,7 @@ struct ofxSequencerRowBase
     
     virtual void store_Row_Values() { }
     
-    vector<bool> GRID_row_Values;
+    vector<bool> grid_Rows;
     
 }; //ofxSequencerRowBase
 
@@ -91,7 +91,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     bool getValue_Cell(int idx)// works
     {
         bool myVal = (bool) values[idx];
-        ofLogVerbose() << "- getValue_Cell(idx) : " << myVal;
+        ofLogVerbose("ofxSequencer") << "- getValue_Cell(idx) : " << myVal;
         //return parameter->getMax();
         return myVal;//bool
     }
@@ -101,7 +101,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
     bool get_CellValue(int idx)
     {
         bool myVal = (bool) values[idx];
-        //ofLogVerbose() << "get_CellValue[idx] : " << myVal;
+        //ofLogVerbose("ofxSequencer") << "get_CellValue[idx] : " << myVal;
         return myVal;
     };
     
@@ -141,8 +141,8 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
         
         //--
         
-        // init row GRID_row_Values values vector
-        GRID_row_Values.push_back( (bool) ( parameter->get() ) );
+        // init row grid_Rows values vector
+        grid_Rows.push_back( (bool) ( parameter->get() ) );
         
         //--
     }
@@ -180,8 +180,8 @@ void ofxSequencerRow<T>::randomize()
         
         //--
         
-        // TODO: add to GRID_row_Values too
-        GRID_row_Values[i] = (bool) values[i];
+        // TODO: add to grid_Rows too
+        grid_Rows[i] = (bool) values[i];
         
         //-
     }
@@ -189,7 +189,7 @@ void ofxSequencerRow<T>::randomize()
 
 //------------------
 
-// store all row columns values (steps) in bool vector GRID_row_Values
+// store all row columns values (steps) in bool vector grid_Rows
 
 template<class T>
 void ofxSequencerRow<T>::store_Row_Values()
@@ -200,10 +200,10 @@ void ofxSequencerRow<T>::store_Row_Values()
         // TODO: cell is float..
         myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
-        ofLogVerbose() <<  "store_Row_Values: c: " << c << " = " << myVal;
+        ofLogVerbose("ofxSequencer") <<  "store_Row_Values: c: " << c << " = " << myVal;
         
         // store in row
-        GRID_row_Values[c] = myVal;
+        grid_Rows[c] = myVal;
     }
 }
 
@@ -373,7 +373,7 @@ public:
     bool get_Value(int r, int c) {
         bool myValue = ((ofxSequencerRow<T>*) rows[r])->get_Value(c);
         
-        ofLogVerbose() << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << myValue;
+        ofLogVerbose("ofxSequencer") << "-- get_Value " << "r:" << r << " c:" << c << " get_Value:" << myValue;
         return myValue;
     }
     
@@ -396,7 +396,7 @@ public:
 
     // GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
 
-    vector < vector <bool> > GRID_RowsByCols_values;//all cols in all rows
+    vector < vector <bool> > grid;//all cols in all rows
     
     //------------------
     
@@ -457,7 +457,7 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
         vector <bool> myBools;
         bool defState = false;
         myBools.push_back(defState);//define cell
-        GRID_RowsByCols_values.push_back(myBools);//create row
+        grid.push_back(myBools);//create row
     }
     
     //--
