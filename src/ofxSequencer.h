@@ -47,9 +47,13 @@ struct ofxSequencerRowBase
     int cols;
     
     //-
-    
+
+    // API
+
     virtual void store_Row_Values() { }
-    
+
+    // DATA
+
     vector<bool> grid_Rows;
     
 }; //ofxSequencerRowBase
@@ -189,15 +193,16 @@ void ofxSequencerRow<T>::randomize()
 
 //------------------
 
-// store all row columns values (steps) in bool vector grid_Rows
+// read and store all row columns values (steps) in bool vector grid_Rows
 
 template<class T>
 void ofxSequencerRow<T>::store_Row_Values()
 {
     for (int c = 0; c < values.size(); c++)
     {
-        bool myVal;
         // TODO: cell is float..
+
+                bool myVal;
         myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
         ofLogVerbose("ofxSequencer") <<  "store_Row_Values: c: " << c << " = " << myVal;
@@ -324,29 +329,31 @@ public:
 
     //--
 
-    void GRID_Refresh();
-    
+
     //--
-    
+
     // TODO: BUG: play starts from step 1 instead of from 0 like expected!
-    
+
     void start();
-    
+
     void advance();
-    
+
     // TODO: added transport methods
     // TODO: loop, one trig, loop and back...
-    
+
     void stepBack();
-    
+
     void stop();
     void reset();
     void randomize();
-    
+
     //--
-    
-    void get_AllValues();
-    
+
+    void get_gridFromSequencerParams();
+
+    void set_GridFromSequencer();
+    void set_SequencerFromGrid();
+
     void DEBUG_All_GRID();//show store GRID vector
     
     //--
@@ -394,10 +401,12 @@ public:
 
     // SEQUENCER DATA
 
-    // GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
+    // DATA GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
 
     vector < vector <bool> > grid;//all cols in all rows
-    
+
+    // TODO: take care with this grid cause is bool not int!
+
     //------------------
     
 private:
@@ -457,6 +466,7 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
         vector <bool> myBools;
         bool defState = false;
         myBools.push_back(defState);//define cell
+
         grid.push_back(myBools);//create row
     }
     

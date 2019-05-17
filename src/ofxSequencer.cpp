@@ -20,13 +20,16 @@ void ofxSequencer::setup(int cols, int beatsPerMinute, int beatsPerBar)
 {
     ofSetLogLevel(OF_LOG_NOTICE);
     
-    this->cols = cols;
+    this->cols = cols;// total num cols
     setBpm(beatsPerMinute, beatsPerBar);
     setMouseActive(true);
     setPosition(0, 0, 24 * cols, 96);
     
     //--
-    
+
+    // TODO: maybe should change from vector to array fixed size mode..
+    // maybe to use pointers too
+
 //    // resize and erase bools grid. 12 rows and 16 cols
 //    for (int r = 0; r < 12; r++)
 //    {
@@ -76,31 +79,31 @@ void ofxSequencer::randomize()
 }
 
 //-------------------------------------------------------------------
-void ofxSequencer::GRID_Refresh()
+void ofxSequencer::get_gridFromSequencerParams()
 {
-    // get grid matrix values from internal parameters to grid vector
-
-    ofLogNotice() << "-------------GRID_Refresh-----------";
-    
-    //--
-    
-    for (int r = 0; r < rows.size(); r++)
-    {
-        ofLogVerbose("ofxSequencer") << "--- row " << r;
-        
-        // read and fill all bools cols for any rows?
-        for (int c = 0 ; c < cols; c++)
-        {
-            bool boolState;
-            boolState = rows[r]->grid_Rows[c];
-            
-            grid[c][r] = boolState;
-            
-            ofLogVerbose("ofxSequencer") << "grid c:" << c << " = " << boolState;
-        }
-    }
-    
-    //--
+//    // put grid values (bool) from internal parameters (bool)
+//
+//    ofLogNotice("ofxSequencer")<< "-------------get_gridFromSequencerParams-----------";
+//
+//    //--
+//
+//    for (int r = 0; r < rows.size(); r++)
+//    {
+//        ofLogVerbose("ofxSequencer") << "--- row " << r;
+//
+//        // read and fill all bools cols for any rows?
+//        for (int c = 0 ; c < cols; c++)
+//        {
+//            bool boolState;
+//            boolState = rows[r]->grid_Rows[c];
+//
+//            grid[c][r] = boolState;
+//
+//            ofLogVerbose("ofxSequencer") << "grid c:" << c << " = " << boolState;
+//        }
+//    }
+//
+//    //--
 }
 
 //-------------------------------------------------------------------
@@ -108,7 +111,7 @@ void ofxSequencer::DEBUG_All_GRID()
 {
     // dump grid matrix values
 
-    ofLogNotice() << "-------------DEBUG_All_GRID-----------";
+    ofLogNotice("ofxSequencer")<< "DEBUG_All_GRID";
     
     bool myVal;
     for (int r = 0; r < rows.size(); r++)
@@ -126,11 +129,11 @@ void ofxSequencer::DEBUG_All_GRID()
 }
 
 //-------------------------------------------------------------------
-void ofxSequencer::get_AllValues()
+void ofxSequencer::set_GridFromSequencer()
 {
-    // get values from internal parameters to grid matrix vector
+    // get values from internal parameters to data grid vector ?
 
-    ofLogNotice() << "-------------get_AllValues-----------";
+    ofLogNotice("ofxSequencer") << "set_GridFromSequencer";
     
     for (int r = 0; r < rows.size(); r++) {
         ofLogVerbose("ofxSequencer") << "--- row " << r;
@@ -145,12 +148,42 @@ void ofxSequencer::get_AllValues()
             //ofLogVerbose("ofxSequencer") << "r:" << r << " c:" << c;
             
             bool myVal;
-            
             myVal = rows[r]->grid_Rows[c];//test after move to base
          
             grid[r][c] = myVal;
         }
         ofLogVerbose("ofxSequencer") << "----------------------------";
+    }
+}
+
+//------------------------------------------------
+void ofxSequencer::set_SequencerFromGrid()
+{
+    ofLogNotice("ofxSequencer") << "set_SequencerFromGrid";
+
+    // put sequencer parameters values (bool) from grid vector (bool) !
+
+    for (int n = 0; n < rows.size(); n++)
+    {
+        string str;
+
+        ofLogNotice("ofxSequencer") << "row:" << n;
+        for (int b = 0; b < cols; b++)
+        {
+            // SEQUENCER CLASS
+
+            // set value to sequencer grid squares
+
+            bool state = grid[n][b];
+
+            setValue<bool>( n, b, state );
+
+            str += ofToString( state ) + " ";
+
+            //-
+        }
+
+        ofLogNotice("ofxSequencer") << str;
     }
 }
 
