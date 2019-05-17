@@ -110,7 +110,8 @@ void ofxSequencer::set_GridFromSequencer()
     
     for (int r = 0; r < rows.size(); r++) {
         ofLogVerbose("ofxSequencer") << "--- row " << r;
-        
+
+        // TODO: ??
         // save every row columns values on his object.. ??
         rows[r]->store_Row_Values();//working
         
