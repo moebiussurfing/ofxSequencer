@@ -128,7 +128,7 @@ void ofxSequencer::DEBUG_All_GRID()
 //-------------------------------------------------------------------
 void ofxSequencer::get_AllValues()
 {
-    // get values from internal parameters to grid matrix
+    // get values from internal parameters to grid matrix vector
 
     ofLogNotice() << "-------------get_AllValues-----------";
     
