@@ -193,7 +193,7 @@ void ofxSequencerRow<T>::randomize()
 
 //------------------
 
-// read and store all row columns values (steps) in bool vector grid_Rows
+// read (from cells) and store all row columns values (steps) in bool vector grid_Rows
 
 template<class T>
 void ofxSequencerRow<T>::store_Row_Values()
@@ -202,7 +202,7 @@ void ofxSequencerRow<T>::store_Row_Values()
     {
         // TODO: cell is float..
 
-                bool myVal;
+        bool myVal;
         myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
         ofLogVerbose("ofxSequencer") <<  "store_Row_Values: c: " << c << " = " << myVal;
@@ -349,8 +349,6 @@ public:
 
     //--
 
-    void get_gridFromSequencerParams();
-
     void set_GridFromSequencer();
     void set_SequencerFromGrid();
 
@@ -461,15 +459,17 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     //--
     
     // erase all bools cols for any rows (?)
+
+    vector <bool> myBools;
+
     for (int c = 0 ; c < cols; c++)
     {
-        vector <bool> myBools;
         bool defState = false;
         myBools.push_back(defState);//define cell
-
-        grid.push_back(myBools);//create row
     }
-    
+
+    grid.push_back(myBools); //create row
+
     //--
 }
 

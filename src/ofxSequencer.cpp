@@ -78,33 +78,6 @@ void ofxSequencer::randomize()
     toRedraw = true;
 }
 
-//-------------------------------------------------------------------
-void ofxSequencer::get_gridFromSequencerParams()
-{
-//    // put grid values (bool) from internal parameters (bool)
-//
-//    ofLogNotice("ofxSequencer")<< "-------------get_gridFromSequencerParams-----------";
-//
-//    //--
-//
-//    for (int r = 0; r < rows.size(); r++)
-//    {
-//        ofLogVerbose("ofxSequencer") << "--- row " << r;
-//
-//        // read and fill all bools cols for any rows?
-//        for (int c = 0 ; c < cols; c++)
-//        {
-//            bool boolState;
-//            boolState = rows[r]->grid_Rows[c];
-//
-//            grid[c][r] = boolState;
-//
-//            ofLogVerbose("ofxSequencer") << "grid c:" << c << " = " << boolState;
-//        }
-//    }
-//
-//    //--
-}
 
 //-------------------------------------------------------------------
 void ofxSequencer::DEBUG_All_GRID()
@@ -131,14 +104,14 @@ void ofxSequencer::DEBUG_All_GRID()
 //-------------------------------------------------------------------
 void ofxSequencer::set_GridFromSequencer()
 {
-    // get values from internal parameters to data grid vector ?
+    // get values from internal draw parameters to data grid vector ?
 
     ofLogNotice("ofxSequencer") << "set_GridFromSequencer";
     
     for (int r = 0; r < rows.size(); r++) {
         ofLogVerbose("ofxSequencer") << "--- row " << r;
         
-        // save every row columns values on his object..
+        // save every row columns values on his object.. ??
         rows[r]->store_Row_Values();//working
         
         //-
@@ -161,7 +134,7 @@ void ofxSequencer::set_SequencerFromGrid()
 {
     ofLogNotice("ofxSequencer") << "set_SequencerFromGrid";
 
-    // put sequencer parameters values (bool) from grid vector (bool) !
+    // put sequencer draw  parameters values (bool) from grid vector (bool) !
 
     for (int n = 0; n < rows.size(); n++)
     {
@@ -175,10 +148,9 @@ void ofxSequencer::set_SequencerFromGrid()
             // set value to sequencer grid squares
 
             bool state = grid[n][b];
+            str += ofToString( state ) + " ";
 
             setValue<bool>( n, b, state );
-
-            str += ofToString( state ) + " ";
 
             //-
         }
