@@ -141,7 +141,7 @@ void ofxSequencer::set_SequencerFromGrid()
     {
         string str;
 
-        ofLogNotice("ofxSequencer") << "row:" << n;
+        ofLogVerbose("ofxSequencer") << "row:" << n;
         for (int b = 0; b < cols; b++)
         {
             // SEQUENCER CLASS
@@ -156,7 +156,7 @@ void ofxSequencer::set_SequencerFromGrid()
             //-
         }
 
-        ofLogNotice("ofxSequencer") << str;
+        ofLogVerbose("ofxSequencer") << str;
     }
 }
 

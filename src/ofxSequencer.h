@@ -7,6 +7,11 @@
 /// shoul be added a new standby -1 step to columns..
 ///-------------------------------------------------------------
 
+// TODO: BUG: massive overlap on startup ofOrganelle
+// should debug: [notice ] ofxSequencer: set_GridFromSequencer
+// ] ofxSequencer: store_Row_Values: c: 14 = 0
+//[verbose] ofxSequencer: store_Row_Values: c: 15 = 0
+
 #pragma once
 
 #include "ofMain.h"
