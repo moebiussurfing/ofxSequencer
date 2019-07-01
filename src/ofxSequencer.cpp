@@ -19,13 +19,24 @@ ofxSequencer::~ofxSequencer()
 void ofxSequencer::setup(int cols, int beatsPerMinute, int beatsPerBar)
 {
     ofSetLogLevel(OF_LOG_NOTICE);
-    
+
+    // TODO: BUG: add step 0
     this->cols = cols;// total num cols
+//    this->cols = cols + 1;// total num cols
+
     setBpm(beatsPerMinute, beatsPerBar);
     setMouseActive(true);
     setPosition(0, 0, 24 * cols, 96);
     
     //--
+
+//    // TODO: BUG: add step 0
+//    for (int r = 0; r < NUM_SEQ_NOTES; r++)
+//    {
+//        this->setValue<bool>(r, 0, false);
+//    }
+
+    //-
 
     // TODO: maybe should change from vector to array fixed size mode..
     // maybe to use pointers too
@@ -67,7 +78,16 @@ void ofxSequencer::stop()
 void ofxSequencer::reset()
 {
     bpm.reset();
-    column = 0;
+//    column = 0;
+
+// TODO: BUG: add step 0
+    column = - 1;
+    for (int r = 0; r < rows.size(); r++)
+    {
+        rows[r]->update(cols);
+//        rows[r]->;
+    }
+
 }
 
 void ofxSequencer::randomize()
@@ -90,9 +110,10 @@ void ofxSequencer::DEBUG_All_GRID()
     for (int r = 0; r < rows.size(); r++)
     {
         ofLogVerbose("ofxSequencer") << "--- row " << r;
-          
+
         for (int c = 0; c < cols; c++)
-        {
+//        for (int c = 0; c < cols-1; c++)
+            {
             myVal = grid[r][c];
               
             ofLogVerbose("ofxSequencer") << "- col " << c << " " << myVal;
@@ -118,6 +139,7 @@ void ofxSequencer::set_GridFromSequencer()
         //-
         
         for (int c = 0; c < cols; c++)
+//        for (int c = 0; c < cols-1; c++)
         {
             //ofLogVerbose("ofxSequencer") << "r:" << r << " c:" << c;
             
@@ -142,7 +164,9 @@ void ofxSequencer::set_SequencerFromGrid()
         string str;
 
         ofLogVerbose("ofxSequencer") << "row:" << n;
+
         for (int b = 0; b < cols; b++)
+//        for (int b = 0; b < cols-1; b++)
         {
             // SEQUENCER CLASS
 
@@ -169,6 +193,9 @@ void ofxSequencer::play(void)
 void ofxSequencer::advance()
 {
     column = (column + 1) % cols;
+// TODO: BUG: add step 0
+//    column = (column + 1) % (cols-1);
+
     if (smooth) {
         bpmTime = ofGetElapsedTimeMillis();
         cursor = column;
@@ -322,8 +349,10 @@ void ofxSequencer::draw()
         ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
         ofSetColor(255, 0, 0, 255 * t);
         ofDrawRectangle(cellWidth * ((column + 1) % cols), 0, cellWidth, height);
+//        ofDrawRectangle(cellWidth * ((column + 1) % (cols-1)), 0, cellWidth, height);
+
     }
-    else
+    else if (column != -1)
     {
         //        ofSetColor(255, 0, 0);
         //        // lines only
@@ -355,6 +384,7 @@ void ofxSequencer::draw()
 void ofxSequencer::redraw()
 {
     cellWidth  = (float) width  / cols;
+//    cellWidth  = (float) width  / (cols-1);
     cellHeight = (float) height / rows.size();
 
     fbo.begin();
@@ -373,6 +403,7 @@ void ofxSequencer::redraw()
     {
         ofSetColor(255);
         for (int c = 0; c < cols; c++)
+//        for (int c = 0; c < cols-1; c++)
         {
             rows[r]->draw(c, cellWidth, cellHeight);
             ofTranslate(cellWidth, 0);
@@ -390,6 +421,7 @@ void ofxSequencer::redraw()
         ofDrawLine(0, r * cellHeight, width, r * cellHeight);
     }
     for (int c=1; c<cols; c++) {
+//    for (int c=1; c<cols-1; c++) {
         ofDrawLine(c * cellWidth, 0, c * cellWidth, height);
     }
     
