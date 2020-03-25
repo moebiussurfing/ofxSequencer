@@ -102,13 +102,14 @@ void ofxSequencer::reset()
 
 	//TODO:
 	//workaround to disable all toggles when stopped
+	//could add a last step with all params disabled?
 	for (int r = 0; r < rows.size(); r++)
 	{
-		//rows[r]->update(cols);
-		//this works on macOS but crashes on Windows
+		rows[r]->resetParam();
 
-		rows[r]->update(0);
-		//rows[r]->;
+		//rows[r]->update(0);
+		//rows[r]->update(this->cols-1);
+		//rows[r]->update(cols);//this works on macOS but crashes on Windows
 	}
 }
 

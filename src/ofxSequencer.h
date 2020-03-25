@@ -1,29 +1,28 @@
 
-
 ///-------------------------------------------------------------
-/// addon modified from the original from:
-/// https://github.com/genekogan/ofxSequencer
+///addon modified from the original from:
+///https://github.com/genekogan/ofxSequencer
 ///
-/// TODO: BUG: starting skips step 0... A standby state or step 0 (col -1) should be defined, to jump there when sequencer is stoped. Then, when staring, should jump to step 1 (col = 0)
-/// shoul be added a new standby -1 step to columns..
+///TODO: BUG: starting skips step 0... A standby state or step 0 (col -1) should be defined, to jump there when sequencer is stoped. Then, when staring, should jump to step 1 (col = 0)
+///shoul be added a new standby -1 step to columns..
 ///-------------------------------------------------------------
 
-// TODO: BUG: massive overlap on startup ofOrganelle
-// should debug: [notice ] ofxSequencer: set_GridFromSequencer
-// ] ofxSequencer: store_Row_Values: c: 14 = 0
-//[verbose] ofxSequencer: store_Row_Values: c: 15 = 0
+///TODO: BUG: massive overlap on startup ofOrganelle
+///should debug: [notice ] ofxSequencer: set_GridFromSequencer
+///] ofxSequencer: store_Row_Values: c: 14 = 0
+///[verbose] ofxSequencer: store_Row_Values: c: 15 = 0
 
 #pragma once
 
 #include "ofMain.h"
 #include "ofxSequencerBpm.h"
-//
+
 //#define NUM_SEQ_NOTES 12//max & fixed size
 //#define NUM_SEQ_BEATS 16//max & fixed size
 
 //--
 
-// T ofxSequencerRowBase
+//T ofxSequencerRowBase
 
 struct ofxSequencerRowBase
 {
@@ -37,12 +36,15 @@ struct ofxSequencerRowBase
     template<class T> T getMin();
     template<class T> T getMax();
     
-    template<class T> T getValue();// my getter
+    template<class T> T getValue();//my getter
     
     template<class T> void setValue(int idx, T value);
 
-    bool getValue_Cell(int idx);// works?
+    bool getValue_Cell(int idx);//works?
     
+	//TODO:
+	virtual void resetParam() { }
+
     virtual void update(int column) { }
     virtual void update(float cursor) { }
     virtual void randomize() { }
@@ -57,19 +59,19 @@ struct ofxSequencerRowBase
     
     //-
 
-    // API
+    //API
 
     virtual void store_Row_Values() { }
 
-    // DATA
+    //DATA
 
     vector<bool> grid_Rows;
     
-}; //ofxSequencerRowBase
+};//ofxSequencerRowBase
 
 //------------------
 
-// T ofxSequencerRow
+//T ofxSequencerRow
 
 template<typename T>
 struct ofxSequencerRow : public ofxSequencerRowBase
@@ -101,7 +103,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
         values[idx] = value;
     }
 
-    bool getValue_Cell(int idx)// works
+    bool getValue_Cell(int idx)//works
     {
         bool myVal = (bool) values[idx];
         ofLogVerbose("ofxSequencer") << "- getValue_Cell(idx) : " << myVal;
@@ -118,6 +120,9 @@ struct ofxSequencerRow : public ofxSequencerRowBase
         return myVal;
     };
     
+	//TODO:
+	void resetParam();
+
     void update(int column);
     void update(float cursor);
     
@@ -142,7 +147,7 @@ struct ofxSequencerRow : public ofxSequencerRowBase
 
 //------------------
 
-// creator row with columns
+//creator row with columns
 
 template<class T>
 ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxSequencerRowBase(cols)
@@ -154,7 +159,7 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
         
         //--
         
-        // init row grid_Rows values vector
+        //init row grid_Rows values vector
         grid_Rows.push_back( (bool) ( parameter->get() ) );
         
         //--
@@ -163,7 +168,18 @@ ofxSequencerRow<T>::ofxSequencerRow(ofParameter<T> * parameter, int cols) : ofxS
 
 //------------------
 
-// update row parameter in current column
+//TODO:
+//workaround to reset bool param only. 
+//should upgrade to use with other types using min or zero/false
+template<class T>
+void ofxSequencerRow<T>::resetParam()
+{
+	*parameter = false;
+}
+
+//--
+
+//update row parameter in current column
 
 template<class T>
 void ofxSequencerRow<T>::update(int column)
@@ -173,7 +189,7 @@ void ofxSequencerRow<T>::update(int column)
 
 //------------------
 
-// update row parameter by cursor
+//update row parameter by cursor
 
 template<class T>
 void ofxSequencerRow<T>::update(float cursor)
@@ -183,7 +199,7 @@ void ofxSequencerRow<T>::update(float cursor)
 
 //------------------
 
-// randomize all columns (steps) in the row
+//randomize all columns (steps) in the row
 
 template<class T>
 void ofxSequencerRow<T>::randomize()
@@ -193,37 +209,35 @@ void ofxSequencerRow<T>::randomize()
         
         //--
         
-        // TODO: add to grid_Rows too
+        //TODO: add to grid_Rows too
         grid_Rows[i] = (bool) values[i];
-        
-        //-
     }
 }
 
 //------------------
 
-// read (from cells) and store all row columns values (steps) in bool vector grid_Rows
+//read (from cells) and store all row columns values (steps) in bool vector grid_Rows
 
 template<class T>
 void ofxSequencerRow<T>::store_Row_Values()
 {
     for (int c = 0; c < values.size(); c++)
     {
-        // TODO: cell is float..
+        //TODO: cell is float..
 
         bool myVal;
         myVal = (bool) get_CellValue(c);//myVal = parameter->get();
         
         ofLogVerbose("ofxSequencer") <<  "store_Row_Values: c: " << c << " = " << myVal;
         
-        // store in row
+        //store in row
         grid_Rows[c] = myVal;
     }
 }
 
 //------------------
 
-// mouse handlers
+//mouse handlers
 
 template<class T>
 void ofxSequencerRow<T>::mousePressed(int col, int x, int y)
@@ -252,7 +266,7 @@ inline void ofxSequencerRow<int>::mouseDragged(int col, int y)
 
 //------------------
 
-// drawing functions
+//drawing functions
 
 template<class T>
 void ofxSequencerRow<T>::draw(int col, int cellWidth, int cellHeight)
@@ -274,7 +288,7 @@ inline void ofxSequencerRow<bool>::draw(int col, int cellWidth, int cellHeight)
 
 //------------------
 
-// mouse handlers
+//mouse handlers
 
 template<class T>
 void ofxSequencerRow<T>::mouseReleased(int col)
@@ -297,7 +311,7 @@ inline void ofxSequencerRow<bool>::mouseReleased(int col)
 
 //------------------
 
-// rowBase getters
+//rowBase getters
 
 template<class T> T ofxSequencerRowBase::getMin()
 {
@@ -316,7 +330,7 @@ template<class T> T ofxSequencerRowBase::getValue()
 
 //------------------
 
-// class methods
+//class methods
 
 class ofxSequencer
 {
@@ -338,17 +352,14 @@ public:
 
     //--
 
-
-    //--
-
-    // TODO: BUG: play starts from step 1 instead of from 0 like expected!
+    //TODO: BUG: play starts from step 1 instead of from 0 like expected!
 
     void start();
 
     void advance();
 
-    // TODO: added transport methods
-    // TODO: loop, one trig, loop and back...
+    //TODO: added transport methods
+    //TODO: loop, one trig, loop and back...
 
     void stepBack();
 
@@ -400,19 +411,19 @@ public:
     
     //--
 
-    // made public..
+    //made public..
     float cursor;
     int column;
 
     //--
 
-    // SEQUENCER DATA
+    //SEQUENCER DATA
 
-    // DATA GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
+    //DATA GRID STORAGE. DUPLICATED FROM ORIGINAL CLASS.
 
     vector < vector <bool> > grid;//all cols in all rows
 
-    // TODO: take care with this grid cause is bool not int!
+    //TODO: take care with this grid cause is bool not int!
 
     //------------------
     
@@ -467,7 +478,7 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     
     //--
     
-    // erase all bools cols for any rows (?)
+    //erase all bools cols for any rows (?)
 
     vector <bool> myBools;
 
@@ -478,8 +489,6 @@ void ofxSequencer::addRow(ofParameter<T> * parameter)
     }
 
     grid.push_back(myBools); //create row
-
-    //--
 }
 
 //------------------
