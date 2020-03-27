@@ -3,7 +3,7 @@
 [FORK] addon for OpenFrameworks for creating an auto-updating sequencer. a couple of features:
 
 ## MODIFICATIONS:
-- I made this fork to use into: https://github.com/moebiussurfing/ofxStepSequencer. Feel free to check for it.
+- I made this fork to use into: https://github.com/moebiussurfing/ofxStepSequencer. Feel free to check for it!
 - Added some methods to get and set values from the grid to store/load presets.
 - It only handles bool types.
 - A lot of improvements could be made because of my C++ skills absence. It has been hard for me to add these features. I am sure that my changes are not well done or could be better done. Sorry!
