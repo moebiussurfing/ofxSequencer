@@ -465,6 +465,26 @@ private:
     
     ofFbo fbo;
     bool toRedraw;
+
+	//--
+//
+//	ofParameter<bool> loopBar;
+//	ofParameter<int> numBars;
+//	ofParameter<int> startBar;
+//
+//public:
+//	void setLoopBarMode(bool b)
+//	{
+//		loopBar = b;
+//	}
+//	void setNumBarMode(int i)
+//	{
+//		numBars = i;
+//	}
+//	void setStartBar(int i)
+//	{
+//		startBar = i;
+//	}
 };
 
 //------------------

@@ -373,6 +373,7 @@ void ofxSequencer::update()
 //-------------------------------------------------------------------
 void ofxSequencer::draw()
 {
+	//update drawing only if grid changed to improve performance
 	if (toRedraw)
 	{
 		redraw();
@@ -382,6 +383,7 @@ void ofxSequencer::draw()
 	ofPushMatrix();
 	ofPushStyle();
 
+	//draw grid fbo
 	ofTranslate(x, y);
 	ofSetColor(255);
 	fbo.draw(0, 0, width, height);
@@ -391,6 +393,7 @@ void ofxSequencer::draw()
 	ofSetLineWidth(2);
 	ofNoFill();
 
+	//vertical bar line on current player position/column
 	if (bpm.isPlaying() && smooth)
 	{
 		float t = cursor - floor(cursor);
@@ -430,27 +433,32 @@ void ofxSequencer::draw()
 //-------------------------------------------------------------------
 void ofxSequencer::redraw()
 {
+	//every cell size
 	cellWidth = (float)width / cols;
 	//cellWidth  = (float) width  / (cols-1);
 	cellHeight = (float)height / rows.size();
 
-	fbo.begin();
+	//-
 
+	fbo.begin();
 	ofPushMatrix();
 	ofPushStyle();
+
+	//-
 
 	ofSetColor(0);
 	ofFill();
 	ofDrawRectangle(0, 0, width + 120, height);
 	ofSetColor(255);
-
 	ofSetRectMode(OF_RECTMODE_CENTER);
 	ofTranslate(0.5 * cellWidth, 0.5 * cellHeight);
+
+	//draw every cell name to the left
 	for (int r = 0; r < rows.size(); r++)
 	{
 		ofSetColor(255);
+		//for (int c = 0; c < cols-1; c++)
 		for (int c = 0; c < cols; c++)
-			//for (int c = 0; c < cols-1; c++)
 		{
 			rows[r]->draw(c, cellWidth, cellHeight);
 			ofTranslate(cellWidth, 0);
@@ -458,10 +466,13 @@ void ofxSequencer::redraw()
 		ofTranslate(-cols * cellWidth, cellHeight);
 		//ofSetColor(0, 200, 0);
 		ofSetColor(ofColor::white);
+		
+		//text label
 		ofDrawBitmapString(rows[r]->getName(), -20 - 0.5 * cellWidth + 2, -cellHeight + 8);
 	}
-	ofTranslate(-0.5 * cellWidth, (-0.5 - rows.size()) * cellHeight);
 
+	//lines
+	ofTranslate(-0.5 * cellWidth, (-0.5 - rows.size()) * cellHeight);
 	ofSetColor(100);
 	ofSetLineWidth(1);
 	for (int r = 1; r < rows.size(); r++)
@@ -474,9 +485,10 @@ void ofxSequencer::redraw()
 		ofDrawLine(c * cellWidth, 0, c * cellWidth, height);
 	}
 
+	//-
+
 	ofPopStyle();
 	ofPopMatrix();
-
 	fbo.end();
 }
 
