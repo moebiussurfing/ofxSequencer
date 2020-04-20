@@ -358,6 +358,12 @@ void ofxSequencer::setPosition(int x, int y, int width, int height)
 }
 
 //-------------------------------------------------------------------
+void ofxSequencer::setVisible(bool visible)
+{
+	bIsVisible = visible;
+}
+
+//-------------------------------------------------------------------
 void ofxSequencer::update()
 {
 	if (smooth && bpm.isPlaying())
@@ -373,61 +379,64 @@ void ofxSequencer::update()
 //-------------------------------------------------------------------
 void ofxSequencer::draw()
 {
-	//update drawing only if grid changed to improve performance
-	if (toRedraw)
+	if (bIsVisible)
 	{
-		redraw();
-		toRedraw = false;
-	}
+		//update drawing only if grid changed to improve performance
+		if (toRedraw)
+		{
+			redraw();
+			toRedraw = false;
+		}
 
-	ofPushMatrix();
-	ofPushStyle();
+		ofPushMatrix();
+		ofPushStyle();
 
-	//draw grid fbo
-	ofTranslate(x, y);
-	ofSetColor(255);
-	fbo.draw(0, 0, width, height);
+		//draw grid fbo
+		ofTranslate(x, y);
+		ofSetColor(255);
+		fbo.draw(0, 0, width, height);
 
-	ofSetRectMode(OF_RECTMODE_CORNER);
-	//ofSetLineWidth(4);
-	ofSetLineWidth(2);
-	ofNoFill();
+		ofSetRectMode(OF_RECTMODE_CORNER);
+		//ofSetLineWidth(4);
+		ofSetLineWidth(2);
+		ofNoFill();
 
-	//vertical bar line on current player position/column
-	if (bpm.isPlaying() && smooth)
-	{
-		float t = cursor - floor(cursor);
-		ofSetColor(255, 0, 0, 255 * (1 - t));
-		ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
-		ofSetColor(255, 0, 0, 255 * t);
-		ofDrawRectangle(cellWidth * ((column + 1) % cols), 0, cellWidth, height);
-		//ofDrawRectangle(cellWidth * ((column + 1) % (cols-1)), 0, cellWidth, height);
-	}
-	else if (column != -1)
-	{
-		//ofSetColor(255, 0, 0);
-		////lines only
-		//ofNoFill();
+		//vertical bar line on current player position/column
+		if (bpm.isPlaying() && smooth)
+		{
+			float t = cursor - floor(cursor);
+			ofSetColor(255, 0, 0, 255 * (1 - t));
+			ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
+			ofSetColor(255, 0, 0, 255 * t);
+			ofDrawRectangle(cellWidth * ((column + 1) % cols), 0, cellWidth, height);
+			//ofDrawRectangle(cellWidth * ((column + 1) % (cols-1)), 0, cellWidth, height);
+		}
+		else if (column != -1)
+		{
+			//ofSetColor(255, 0, 0);
+			////lines only
+			//ofNoFill();
+			//ofSetColor(ofColor::white);
+			//ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
+
+			//filled bar with alpha
+			ofFill();
+			int grey = 255;
+			int a = 64;
+			ofColor c;
+			c.set(grey);
+			ofSetColor(c.r, c.g, c.b, a);
+			ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
+		}
+
+		ofPopStyle();
+		ofPopMatrix();
+
+		////debug
 		//ofSetColor(ofColor::white);
-		//ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
-
-		//filled bar with alpha
-		ofFill();
-		int grey = 255;
-		int a = 64;
-		ofColor c;
-		c.set(grey);
-		ofSetColor(c.r, c.g, c.b, a);
-		ofDrawRectangle(cellWidth * column, 0, cellWidth, height);
+		//ofDrawBitmapString(ofToString(column), 800, 800);
+		////if (column == 4) column = 0;
 	}
-
-	ofPopStyle();
-	ofPopMatrix();
-
-	////debug
-	//ofSetColor(ofColor::white);
-	//ofDrawBitmapString(ofToString(column), 800, 800);
-	////if (column == 4) column = 0;
 }
 
 //-------------------------------------------------------------------

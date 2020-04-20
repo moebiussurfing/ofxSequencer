@@ -380,8 +380,15 @@ public:
     void draw();
     
     void setPosition(int x, int y, int width, int height);
+
+	//TODO:
     void setVisible(bool visible);
-    void toggleVisible();
+	bool isVisible() {
+		return bIsVisible;
+	};
+	bool bIsVisible = true;
+    //void toggleVisible();
+
     void setMouseActive(bool active);
     
     //--
